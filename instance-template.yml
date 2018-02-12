@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Initial template for creating instances running docker
+Resources:
+  SearchManagement:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: 't2.micro'  # Cost control - can be bumped up
+      ImageId: 'ami-66506c1c'  # Ubuntu 16.04
+      SecurityGroups:
+        - 'webAccess'
+        - 'kibanaAccess'
+  SearchEngine:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: 't2.medium'  # Medium - provides 4gb RAM
+      ImageId: 'ami-66506c1c'  # Ubuntu 16.04
+      SecurityGroups:
+        - 'internalAccess'
+  webAccess:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupName: 'webAccess'
+      GroupDescription: 'Search front end access'
+      SecurityGroupIngress:
+        - IpProtocol: 'tcp'
+        - FromPort: '80'
+        - ToPort: '80'
+        - CidrIp: '0.0.0.0/0'
+  kibanaAccess:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupName: 'kibanaAccess'
+      GroupDescription: 'Kibana Access'
+      SecurityGroupIngress:
+        - IpProtocol: 'tcp'
+        - FromPort: '5601'
+        - ToPort: '5601'
+        - CidrIp: '0.0.0.0/0'
+  internalAccess:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupName: 'internalAccess'
+      GroupDescription: 'Internal ES access'
+
