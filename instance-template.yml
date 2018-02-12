@@ -7,15 +7,15 @@ Resources:
       InstanceType: 't2.micro'  # Cost control - can be bumped up
       ImageId: 'ami-66506c1c'  # Ubuntu 16.04
       SecurityGroups:
-        - 'webAccess'
-        - 'kibanaAccess'
+        - Ref: 'webAccess'
+        - Ref: 'kibanaAccess'
   SearchEngine:
     Type: 'AWS::EC2::Instance'
     Properties:
       InstanceType: 't2.medium'  # Medium - provides 4gb RAM
       ImageId: 'ami-66506c1c'  # Ubuntu 16.04
       SecurityGroups:
-        - 'internalAccess'
+        - Ref: 'internalAccess'
   webAccess:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
